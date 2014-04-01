@@ -1,10 +1,10 @@
 #include "FastLED.h"
 #include <avr/pgmspace.h>
 
-#define NUM_LEDS 22
+#define NUM_LEDS 14
 #define NUM_STRANDS 3
 
-#define DATA_PIN  2
+#define DATA_PIN  12
 #define DATA_PIN2 3
 #define DATA_PIN3 4
 
@@ -29,28 +29,36 @@ void setup() {
       FastLED.addLeds<WS2812B, DATA_PIN2, GRB>(leds[1], NUM_LEDS);
       FastLED.addLeds<WS2812B, DATA_PIN3, GRB>(leds[2], NUM_LEDS);
     
-      //Comet();
+      Comet();
 }
 
 
-void scrolldown() {
-  for(j=0; j < NUM_STRANDS; j++) {
+void scrolldown() 
+{
+    for (j = 0; j < NUM_STRANDS; j++) 
+    {
         temp = leds[j][NUM_LEDS - 1];
-        for(i = NUM_LEDS - 1; i>=1; i--) {
-          leds[j][i]=leds[j][i-1];
+        for (i = NUM_LEDS - 1; i >= 1; i--) 
+        {
+            leds[j][i] = leds[j][i-1];
         }
-      leds[j][0]=temp;
-      }
+        leds[j][0] = temp;
+    }
 }
 
-void scrollup() {
-  for(j<= NUM_STRANDS; j >= 0; j++) {
+
+void scrollup() 
+{
+    CRGB temp;
+    for (j = 0; j < NUM_STRANDS; j++) 
+    {
         temp = leds[j][0];
-        for(i = NUM_LEDS - 1; i>=0; i--) {
-          leds[j][i]=leds[j][i+1];
+        for (i = 0; i <= NUM_LEDS-1; i++) 
+        {
+            leds[j][i] = leds[j][i+1];
         }
-      leds[j][21]=temp;
-     }    
+        leds[j][NUM_LEDS-1] = temp;
+    }    
 } 
 
 
@@ -79,8 +87,8 @@ void Comet() {
     leds[0][4] = CRGB::Orange;
     leds[0][3] = CRGB::Orange;
     leds[0][2] = CRGB::Orange;
-    leds[0][1] = CRGB::Yellow;
-    leds[0][0] = CRGB::Yellow;
+    leds[0][1] = CRGB::Gold;
+    leds[0][0] = CRGB::Gold;
     
     leds[1][13] = CRGB::Red;
     leds[1][12] = CRGB::Red;
@@ -113,24 +121,68 @@ void Comet() {
     leds[2][0] = CRGB::Yellow;
 }
     
-void loop () {
-      #if 0
-      scrolldown();
-      FastLED.setBrightness(50);
-      FastLED.show();
-      delay (30);
-      #endif
+void loop () 
+{
+      int i;
       
+      Comet();
+      FastLED.show();
+      for (i = 0; i < 100; i++) {
+          scrolldown();
+          FastLED.setBrightness(50);
+          FastLED.show();
+          delay (50);  
+      }
+
+
+      // Red from low to high and back
       AllColor(CRGB::Red);
-      FastLED.setBrightness(100);
+      for (i = 0; i < 100; i++) {
+        FastLED.setBrightness(i);
+        FastLED.show();
+        delay(20);
+      }
+      for (i = 100; i > 0; i--) {
+        FastLED.setBrightness(i);
+        FastLED.show();
+        delay(20);
+      }
+      
+      // Orange from low to high and back
+      AllColor(CRGB::OrangeRed);
+      for (i = 0; i < 100; i++) {
+        FastLED.setBrightness(i);
+        FastLED.show();
+        delay(20);
+      }
+      for (i = 100; i > 0; i--) {
+        FastLED.setBrightness(i);
+        FastLED.show();
+        delay(20);
+      }
+      
+      // Yellow from low to high and back
+      AllColor(CRGB:: Gold);
+      for (i = 0; i < 100; i++) {
+        FastLED.setBrightness(i);
+        FastLED.show();
+        delay(20);
+      }
+      for (i = 100; i > 0; i--) {
+        FastLED.setBrightness(i);
+        FastLED.show();
+        delay(20);
+      }
+      
+      
+      Comet();
       FastLED.show();
-      delay(5000);
-      AllColor(CRGB::Blue);
-      FastLED.setBrightness(100);
-      FastLED.show();
-      delay(5000);
-      AllColor(CRGB::Green);
-      FastLED.setBrightness(100);
-      FastLED.show();
-      delay(5000);
+      for (i = 0; i < 100; i++) {
+          scrollup();
+          FastLED.setBrightness(50);
+          FastLED.show();
+          delay (50);  
+      }
+   
+      
 }
