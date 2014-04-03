@@ -102,8 +102,8 @@ void Comet() {
     leds[1][4] = CRGB::Orange;
     leds[1][3] = CRGB::Orange;
     leds[1][2] = CRGB::Orange;
-    leds[1][1] = CRGB::Yellow;
-    leds[1][0] = CRGB::Yellow;
+    leds[1][1] = CRGB::Gold;
+    leds[1][0] = CRGB::Gold;
    
     leds[2][13] = CRGB::Red;
     leds[2][12] = CRGB::Red;
@@ -127,9 +127,9 @@ void loop ()
       
       Comet();
       FastLED.show();
+      FastLED.setBrightness(100);
       for (i = 0; i < 100; i++) {
           scrolldown();
-          FastLED.setBrightness(50);
           FastLED.show();
           delay (50);  
       }
@@ -176,10 +176,10 @@ void loop ()
       
       
       Comet();
+      FastLED.setBrightness(70);
       FastLED.show();
       for (i = 0; i < 100; i++) {
           scrollup();
-          FastLED.setBrightness(50);
           FastLED.show();
           delay (50);  
       }
